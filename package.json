@@ -1,7 +1,7 @@
 {
   "name": "@hyvor/hyvor-blogs-ts",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -24,7 +24,9 @@
     "@keyvhq/file": "^2.0.0",
     "crypto-js": "^4.1.1"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },

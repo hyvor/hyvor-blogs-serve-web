@@ -42,14 +42,7 @@ it('returns blog response success', async () => {
     expect(response.status).toBe(200);
     expect(response.headers.get('Cache-Control')).toBe('no-cache');
 
-    /**
-     * happy-dom bug where node 18.x returns a Blob instead of a string
-     */
-    let text = await response.text() as string|Blob;
-    if (typeof text !== 'string') {
-        text = await text.text();
-    }
-    expect(text).toBe('Hello World');
+    expect(await response.text()).toBe('Hello World');
 
     expect(mock).toHaveBeenCalledOnce();
     expect(mock).toHaveBeenCalledWith(

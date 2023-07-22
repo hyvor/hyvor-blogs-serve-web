@@ -1,5 +1,5 @@
 {
-  "name": "@hyvor/hyvor-blogs-ts",
+  "name": "@hyvor/hyvor-blogs-serve",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -29,6 +29,6 @@
     "access": "public"
   },
   "license": "MIT",
-  "main": "dist/hyvor-blogs-ts.umd.js",
-  "module": "dist/hyvor-blogs-ts.es.js"
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js"
 }

@@ -10,8 +10,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: 'src/index.ts',
-            name: 'hyvor-blogs-ts',
-            fileName: (format) => `hyvor-blogs-ts.${format}.js`
+            name: 'index',
+            fileName: (format) => `index.${format}.js`
         }
     }
 })

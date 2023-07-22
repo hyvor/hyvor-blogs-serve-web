@@ -46,7 +46,7 @@ it('returns blog response success', async () => {
      * happy-dom bug where node 18.x returns a Blob instead of a string
      */
     let text = await response.text() as string|Blob;
-    if (text instanceof Blob) {
+    if (typeof text !== 'string') {
         text = await text.text();
     }
     expect(text).toBe('Hello World');

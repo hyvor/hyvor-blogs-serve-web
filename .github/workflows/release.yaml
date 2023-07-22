@@ -20,6 +20,12 @@ jobs:
           registry-url: https://registry.npmjs.org/
           node-version: '16'
 
+      # Install & build
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
       # Configure Git
       - name: Git configuration
         run: |

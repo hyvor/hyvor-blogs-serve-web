@@ -1,11 +1,11 @@
 {
-  "name": "package-hyvor-blogs-nextjs",
+  "name": "@hyvor/hyvor-blogs-ts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "preview": "vite preview",
     "test:watch": "vitest",
     "test": "vitest run",
@@ -23,5 +23,12 @@
     "@keyvhq/core": "^2.0.0",
     "@keyvhq/file": "^2.0.0",
     "crypto-js": "^4.1.1"
-  }
+  },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "main": "dist/hyvor-blogs-ts.umd.js",
+  "module": "dist/hyvor-blogs-ts.es.js"
 }

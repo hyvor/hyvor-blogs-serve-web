@@ -29,7 +29,7 @@ export interface BlogOptions {
         /**
          * Set up a custom [Keyv](https://keyvhq.js.org/) store for caching
          * Ex: Redis backend
-         * If not provided, a file-based cache is used
+         * If not provided, an in-memory store is used
         */
         store?: Store<any> | Map<string, string>
 

@@ -52,7 +52,7 @@ const blog = new Blog({
 
 ### Caching
 
-This library uses [Keyv](https://keyvhq.js.org/) as an unified caching layer. By default, blog cache is stored in `./.hyvor-blogs-cache/{subdomain}` directory in your project root. You can set up a custom cache store by passing a Keyv store to the `cache.store` option.
+This library uses [Keyv](https://keyvhq.js.org/) as an unified caching layer. By default, blog cache is stored in an in-memory cache. You can set up a custom cache store by passing a Keyv store to the `cache.store` option (highly recommended).
 
 Here is an example using Redis as the cache store.
 
@@ -69,6 +69,7 @@ const blog = new Blog({
 })
 ```
 
+See [Keyv's documentation](https://keyvhq.js.org/#/?id=all-the-adapters) for all the available adapters.
 
 ### Handling blog requests
 

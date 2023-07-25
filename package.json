@@ -19,8 +19,7 @@
     "vitest": "^0.33.0"
   },
   "dependencies": {
-    "@keyvhq/core": "^2.0.0",
-    "@keyvhq/file": "^2.0.0"
+    "@keyvhq/core": "^2.0.0"
   },
   "files": [
     "dist"

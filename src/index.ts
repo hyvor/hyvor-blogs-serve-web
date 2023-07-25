@@ -1,5 +1,4 @@
 import Keyv from "@keyvhq/core";
-import KeyvFile from "@keyvhq/file";
 import { BlogOptions, ResponseObject } from "./types";
 import { verifyHmacSha256 } from "./crypto";
  
@@ -126,7 +125,7 @@ export class CacheService {
         if (options.cache?.store) {
             storeOptions.store = options.cache.store;
         } else {
-            storeOptions.store = new KeyvFile('./.hyvor-blogs-cache/' + options.subdomain);
+            storeOptions.store = new Map();
         }
 
         if (options.cache?.namespace) {

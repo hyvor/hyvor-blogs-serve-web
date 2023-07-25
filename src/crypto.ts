@@ -1,5 +1,9 @@
 
-// https://bradyjoslin.com/blog/hmac-sig-webcrypto/
+/**
+ * from https://bradyjoslin.com/blog/hmac-sig-webcrypto/
+ * except the hexToBuffer it used
+ * Uint8Array.from(atob(signature), c => c.charCodeAt(0)) didn't work
+ */
 export async function verifyHmacSha256(message: string, secret: string, signature: string) {
 
     const key = await crypto.subtle.importKey(
@@ -10,7 +14,7 @@ export async function verifyHmacSha256(message: string, secret: string, signatur
         ['sign', 'verify'],
     )
 
-    const sigBuf = Uint8Array.from(atob(signature), c => c.charCodeAt(0))
+    const sigBuf = hexToBuffer(signature)
 
     return await crypto.subtle.verify(
         'HMAC',
@@ -19,4 +23,8 @@ export async function verifyHmacSha256(message: string, secret: string, signatur
         new TextEncoder().encode(message),
     )
 
+}
+
+function hexToBuffer(hexString: string) {
+    return new Uint8Array(hexString.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)));
 }

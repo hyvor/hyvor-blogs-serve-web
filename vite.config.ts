@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
     test: {
         root: 'tests',
-        environment: 'happy-dom'
+        environment: 'edge-runtime'
     },
     build: {
         lib: {

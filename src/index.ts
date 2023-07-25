@@ -1,8 +1,8 @@
 import Keyv from "@keyvhq/core";
 import KeyvFile from "@keyvhq/file";
-import {HmacSHA256} from 'crypto-js';
 import { BlogOptions, ResponseObject } from "./types";
-
+import { verifyHmacSha256 } from "./crypto";
+ 
 export class Blog {
 
     public cacheService: CacheService;
@@ -58,11 +58,12 @@ export class Blog {
         if (this.options.webhookSecret) {
             const contentString = JSON.stringify(data);
 
-            const checkSignature = HmacSHA256(contentString, this.options.webhookSecret).toString();
+            const verify = await verifyHmacSha256(contentString, this.options.webhookSecret, signature); 
 
-            if (signature !== checkSignature) {
+            if (!verify) {
                 throw new Error('Signature mismatch');
             }
+
         }
 
         const event = data.event;

@@ -1,5 +1,12 @@
 This package contains helpers for serving blogs created with [Hyvor Blogs](https://hyvor.com/blogs) on web applications such as Next.js. It can run on any framework that supports Web APIs.
 
+## Tutorials
+
+Here are some tutorials on how to use this package with different frameworks.
+
+* [Next.js](https://hyvor.com/blog/nextjs-blog)
+* [Cloudflare Workers](https://hyvor.com/blog/cloudflare-workers-blog)
+
 ## Installation
 
 ```bash
@@ -34,25 +41,20 @@ const blog = new Blog({
      */
     webhookSecret: 'my-webhook-secret',
 
-    cache: {
-
-        // see below
-        store: keyvStore,
-       
-        /**
-         * @optional
-         * Namespace for the cache.
-         */
-        namespace: 'my-blog',
-
-    }
+    /**
+     * An object that has the following methods:
+     * get: (key: string) => Promise<any>
+     * set: (key: string, value: any) => Promise<any>
+     * delete: (key: string) => Promise<any>
+     */
+    cache: myCache,
 
 })
 ```
 
 ### Caching
 
-This library uses [Keyv](https://keyvhq.js.org/) as an unified caching layer. By default, blog cache is stored in an in-memory cache. You can set up a custom cache store by passing a Keyv store to the `cache.store` option (highly recommended).
+Setting up a cache is highly recommended to reduce the number of requests to our Delivery API and to improve the performance of your blog. We recommend using [Keyv](https://keyvhq.js.org/) as the caching layer. If no cache is provided, Keyv in-memory cache is used, which does not give any performance benefits.
 
 Here is an example using Redis as the cache store.
 
@@ -61,15 +63,36 @@ npm install @keyvhq/redis --save
 ```
 
 ```ts
+import Keyv from '@keyvhq/core'
+import KeyvRedis from '@keyvhq/redis'
+
 const blog = new Blog({
     // ...
-    cache: {
-        store: new KeyvRedis('redis://user:pass@localhost:6379')
-    }
+    cache: new Keyv({store: new KeyvRedis('redis://user:pass@localhost:6379')})
 })
 ```
 
 See [Keyv's documentation](https://keyvhq.js.org/#/?id=all-the-adapters) for all the available adapters.
+
+#### Using a custom cache
+
+If you want to use a custom cache, you can pass an object that has the following methods:
+
+```ts
+new Blog({
+    cache: {
+        get: async (key: string) => {
+            // return the value of the key
+        },
+        set: async (key: string, value: any) => {
+            // set the value of the key
+        },
+        delete: async (key: string) => {
+            // delete the key
+        }
+    }
+});
+```
 
 ### Handling blog requests
 

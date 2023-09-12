@@ -1,4 +1,4 @@
-import { expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Blog } from "../src";
 import { BlogOptions, ResponseObject } from "../src/types";
 import Keyv from "@keyvhq/core";
@@ -106,5 +106,35 @@ it('handles server error', async () => {
 
     const cached = await blog.cacheService.get('/about');
     expect(cached).toBeNull();
+
+});
+
+
+describe('experimental', function() {
+
+    it('no cache in fetch', async () => {
+
+        
+        const mock = vi.fn().mockResolvedValue({
+            ok: false,
+        });
+        global.fetch = mock;
+
+        const blog = getBlog({
+            experimental: {
+                dontSetCacheInFetch: true
+            }
+        });
+
+        await blog.handleBlogRequest('/');
+        expect(mock).toHaveBeenCalledOnce();
+        expect(mock).toHaveBeenCalledWith(
+            'https://blogs.hyvor.com/api/delivery/v0/test' +
+            '?path=/' +
+            '&api_key=delivery-api-key',
+            {}
+        );
+
+    });
 
 });

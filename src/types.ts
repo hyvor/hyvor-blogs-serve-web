@@ -42,6 +42,16 @@ export interface BlogOptions {
      */
     hbApiEndpoint?: string,
 
+
+    experimental?: {
+        /**
+         * If true, cache: 'no-store' is not sent in fetch requests
+         * This is a workaround for a bug in Cloudflare Workers
+         * https://github.com/cloudflare/workerd/issues/698
+         */
+        dontSetCacheInFetch?: boolean
+    }
+
 }
 
 export interface FileResponse {

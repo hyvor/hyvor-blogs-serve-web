@@ -23,9 +23,14 @@ export class Blog {
         let responseObject = await this.cacheService.get(path);
 
         if (!responseObject) {
-            const response = await fetch(`${apiEndpoint}?path=${path}&api_key=${apiKey}`, {
-                cache: 'no-store'
-            });
+
+            const fetchOptions : RequestInit = {};
+
+            if (this.options.experimental?.dontSetCacheInFetch !== true) {
+                fetchOptions.cache = 'no-store';
+            }
+
+            const response = await fetch(`${apiEndpoint}?path=${path}&api_key=${apiKey}`, fetchOptions);
 
             if (!response.ok) {
                 return new Response(null, {status: 500});

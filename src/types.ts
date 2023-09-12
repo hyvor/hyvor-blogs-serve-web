@@ -1,4 +1,8 @@
-import { Store } from "@keyvhq/core";
+export type CacheStore = {
+    get(key: string): Promise<any>;
+    set(key: string, value: any): Promise<any>;
+    delete(key: string): Promise<any>;
+}
 
 export interface BlogOptions {
 
@@ -25,16 +29,13 @@ export interface BlogOptions {
     */
     webhookSecret?: string,
 
-    cache?: {
-        /**
-         * Set up a custom [Keyv](https://keyvhq.js.org/) store for caching
-         * Ex: Redis backend
-         * If not provided, an in-memory store is used
-        */
-        store?: Store<any> | Map<string, string>
-
-        namespace?: string
-    }
+    /**
+     * Set up a custom cache store for caching
+     * This must be an object with `get`, `set`, and `delete` methods (See `CacheStore` type)
+     * [Keyv](https://keyvhq.js.org/) is a good option
+     * If not provided, an in-memory store is used using Keyv
+     */
+    cache?: CacheStore 
 
     /**
      * This option is for package developers and testing purposes

@@ -1,15 +1,14 @@
 import { expect, it, vi } from "vitest";
 import { Blog } from "../src";
 import { BlogOptions, ResponseObject } from "../src/types";
+import Keyv from "@keyvhq/core";
 
 export function getBlog(options: Partial<BlogOptions> = {}) {
 
     return new Blog({
         subdomain: 'test',
         deliveryApiKey: 'delivery-api-key',
-        cache: {
-            store: new Map(), // In-memory cache
-        },
+        cache: new Keyv({ store: new Map() }), // in-memory cache
         ...options
     })
 

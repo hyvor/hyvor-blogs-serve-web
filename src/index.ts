@@ -1,5 +1,5 @@
 import Keyv from "@keyvhq/core";
-import { BlogOptions, ResponseObject } from "./types";
+import { BlogOptions, CacheStore, ResponseObject } from "./types";
 import { verifyHmacSha256 } from "./crypto";
  
 export class Blog {
@@ -117,22 +117,10 @@ export class CacheService {
     private readonly LAST_TEMPLATE_CACHE_CLEARED_AT = 'LAST_TEMPLATE_CACHE_CLEARED_AT';
     private readonly LAST_ALL_CACHE_CLEARED_AT = 'LAST_ALL_CACHE_CLEARED_AT';
 
-    private store: Keyv;
+    private store: CacheStore;
 
     constructor(private options: BlogOptions) {
-        const storeOptions : Keyv.Options<any> = {};
-
-        if (options.cache?.store) {
-            storeOptions.store = options.cache.store;
-        } else {
-            storeOptions.store = new Map();
-        }
-
-        if (options.cache?.namespace) {
-            storeOptions.namespace = options.cache.namespace;
-        }
-
-        this.store = new Keyv(storeOptions);
+        this.store = options.cache || new Keyv();
     }
 
     public async set(path: string, object: ResponseObject) {
